@@ -1,0 +1,35 @@
+https://practice.geeksforgeeks.org/problems/number-of-provinces/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=number-of-provinces
+
+class Solution {
+  public:
+    void dfs(int s, vector<int> ad[], vector<bool>&vis){
+        vis[s]=true;
+        for(int u:ad[s]){
+            if(!vis[u]){
+                dfs(u,ad,vis);
+            }
+        }
+        return;
+    }
+    int numProvinces(vector<vector<int>> adj, int V) {
+        // code here
+        vector<int> ad[V];
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                if(i!=j && adj[i][j]==1){
+                    ad[i].push_back(j);
+                    ad[j].push_back(i);
+                }
+            }
+        }
+        vector<bool>vis(V,false);
+        int ct=0;
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                dfs(i,ad,vis);
+                    ct++;
+                }
+            }
+        return ct;
+    }
+};
