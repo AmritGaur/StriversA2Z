@@ -1,0 +1,48 @@
+https://practice.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algo/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=strongly-connected-components-kosarajus-algo
+
+class Solution
+{
+	public:
+	//Function to find number of strongly connected components in the graph.
+	
+    
+	//Function to find number of strongly connected components in the graph.
+    void dfs(int s,vector<int> adj[],vector<bool> &visited,stack<int> &st){
+        visited[s] = true;
+        for(int it : adj[s]){
+            if(visited[it]==false){
+                dfs(it,adj,visited,st);
+            }
+        }
+        st.push(s);
+    }
+    int kosaraju(int v, vector<int> adj[])
+    {
+        //code here
+        stack<int> st;
+        vector<bool> visited(v,false);
+        for(int i=0;i<v;i++){
+            if(visited[i]==false)
+                dfs(i,adj,visited,st);
+        }
+        
+        vector<int>tr[v];
+        for(int i=0;i<v;i++){
+                for(auto node : adj[i]){
+                  tr[node].push_back(i);
+                }
+        }
+        stack<int> s;
+        int ans=0;
+        vector<bool> visited2(v,false);
+        while(st.empty()==false){
+            if(visited2[st.top()]==false){
+                ans++;
+                dfs(st.top(),tr,visited2,s);
+            }
+            st.pop();
+        }
+        
+        return ans;
+    }
+};
